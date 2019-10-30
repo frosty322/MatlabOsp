@@ -1,0 +1,29 @@
+function OstWin
+alph = 0:(pi/12):2*pi;
+t = 0:0.01:5;
+x0 = [sin(alph); cos(alph)];
+Lambda1 = 1;
+Lambda2 = sqrt(-5);
+Var1 = [0; 1];
+Var2 = [1;0];
+G = [transpose(Var1)*Var1 transpose(Var1)*Var2; transpose(Var2)*Var1 transpose(Var2)*Var2];
+beta = [transpose(Var1)*x0; transpose(Var2)*x0];
+gamma = G^(-1)*beta;
+e1 = exp(Lambda1.*t);
+e2 = exp(Lambda2.*t);
+
+if (isreal(Lambda2) == 0)
+x1 = transpose(gamma(1,:))*e1.*Var1(1) + transpose(gamma(1,:))*e2.*Var2(1);
+x2 = transpose(gamma(2,:))*e2.*Var1(2) + transpose(gamma(2,:))*e2.*Var2(2);
+disp(x1);
+disp(x2);
+plot(x1,x2);
+else
+hold on
+for i=1:1:25
+x1 = gamma(1,(i))*e1.*Var1(1) + gamma(2,(i))*e2.*Var2(1);
+x2 = gamma(1,(i))*e1.*Var1(2) + gamma(2,(i))*e2.*Var2(2);
+plot(x1,x2);
+end
+
+end
